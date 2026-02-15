@@ -2,35 +2,50 @@ import * as vscode from 'vscode';
 import { parseAsciiTab } from './parser';
 import { getWebviewContent } from './renderer/webview';
 
-let panel: vscode.WebviewPanel | undefined;
+let sidePanel: vscode.WebviewPanel | undefined;
 let webviewReady = false;
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("AsciiTab extension activated");
 
-  function createOrShowPanel(location: "side" | "current"): vscode.WebviewPanel {
+
+  context.subscriptions.push(vscode.commands.registerCommand(
+    'asciitab.openAudioPanel',
+    () => { createOrShowPanel("current"); }
+  ));
+
+
+  context.subscriptions.push(vscode.commands.registerCommand(
+    'asciitab.openAudioPanelToSide',
+    () => { createOrShowPanel("side"); }
+  ));
+}
+
+function createOrShowPanel(location: "side" | "current"): vscode.WebviewPanel {
+
+  console.log(`location ${location}`);
   const column =
-    location === "side" ? vscode.ViewColumn.Beside : vscode.ViewColumn.Active;
+    location === "side" ? vscode.ViewColumn.Beside : vscode.window.activeTextEditor?.viewColumn || vscode.ViewColumn.One;
 
-  // If user wants a new tab (current tab), always create a new panel
   if (location === "current") {
-    return vscode.window.createWebviewPanel(
-      'asciitabAudio',
-      'AsciiTab Audio',
-      column,
-      { enableScripts: true, retainContextWhenHidden: true }
-    );
+    // Always create a new panel in the current editor
+    return createWebviewPanel('AsciiTab Audio', column);
   }
 
-  // For side panel, reuse single panel
-  if (panel) {
-    panel.reveal(column);
-    return panel;
+  // Side panel: reuse if exists
+  if (sidePanel) {
+    sidePanel.reveal(column);
+    return sidePanel;
   }
 
-  panel = vscode.window.createWebviewPanel(
+  sidePanel = createWebviewPanel('AsciiTab Audio', column);
+  return sidePanel;
+}
+
+function createWebviewPanel(title: string, column: vscode.ViewColumn): vscode.WebviewPanel {
+  const panel = vscode.window.createWebviewPanel(
     'asciitabAudio',
-    'AsciiTab Audio',
+    title,
     column,
     { enableScripts: true, retainContextWhenHidden: true }
   );
@@ -42,19 +57,11 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   panel.onDidDispose(() => {
-    panel = undefined;
+    if (sidePanel === panel) sidePanel = undefined;
     webviewReady = false;
   });
 
   return panel;
 }
 
-vscode.commands.registerCommand(
-  'asciitab.openAudioPanel',
-  (location: "side" | "current" = "side") => {
-    createOrShowPanel(location);
-  }
-);
-}
-
-export function deactivate() {}
+export function deactivate() { }

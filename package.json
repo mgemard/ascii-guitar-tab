@@ -29,36 +29,33 @@
     "commands": [
       {
         "command": "asciitab.openAudioPanel",
+        "when": "editorLangId == asciitab",
         "title": "AsciiTab: Open Audio Panel"
+      },
+      {
+        "command": "asciitab.openAudioPanelToSide",
+        "when": "editorLangId == asciitab",
+        "title": "AsciiTab: Open Audio Panel To Side"
       }
     ],
     "keybindings": [
       {
         "command": "asciitab.openAudioPanel",
         "key": "shift+ctrl+v",
-        "when": "editorTextFocus && editorLangId == asciitab",
-        "arguments": [
-          "current"
-        ]
+        "when": "editorTextFocus && editorLangId == asciitab"
       },
       {
-        "command": "asciitab.openAudioPanel",
+        "command": "asciitab.openAudioPanelToSide",
         "key": "ctrl+k v",
-        "when": "editorTextFocus && editorLangId == asciitab",
-        "arguments": [
-          "side"
-        ]
+        "when": "editorTextFocus && editorLangId == asciitab"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "command": "asciitab.openAudioPanel",
+          "command": "asciitab.openAudioPanelToSide",
           "when": "editorLangId == asciitab",
-          "group": "navigation",
-          "arguments": [
-            "side"
-          ]
+          "group": "navigation"
         }
       ]
     }
