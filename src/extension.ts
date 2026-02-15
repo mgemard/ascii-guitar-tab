@@ -8,12 +8,10 @@ let webviewReady = false;
 export function activate(context: vscode.ExtensionContext) {
   console.log("AsciiTab extension activated");
 
-
   context.subscriptions.push(vscode.commands.registerCommand(
     'asciitab.openAudioPanel',
     () => { createOrShowPanel("current"); }
   ));
-
 
   context.subscriptions.push(vscode.commands.registerCommand(
     'asciitab.openAudioPanelToSide',
