@@ -1,6 +1,6 @@
 {
-  "name": "asciitab-reader",
-  "displayName": "ASCIITab Reader",
+  "name": "ascii-guitar-tab",
+  "displayName": "ASCII Guitar Tab",
   "description": "VS Code extension for reading ASCII guitar tabs",
   "version": "0.0.1",
   "engines": {
@@ -12,12 +12,56 @@
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "asciitab",
+        "aliases": [
+          "AsciiTab",
+          "asciitab"
+        ],
+        "extensions": [
+          ".asciitab",
+          ".tab"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
     "commands": [
       {
-        "command": "asciitab-reader.helloWorld",
-        "title": "Hello World"
+        "command": "asciitab.openAudioPanel",
+        "title": "AsciiTab: Open Audio Panel"
       }
-    ]
+    ],
+    "keybindings": [
+      {
+        "command": "asciitab.openAudioPanel",
+        "key": "shift+ctrl+v",
+        "when": "editorTextFocus && editorLangId == asciitab",
+        "arguments": [
+          "current"
+        ]
+      },
+      {
+        "command": "asciitab.openAudioPanel",
+        "key": "ctrl+k v",
+        "when": "editorTextFocus && editorLangId == asciitab",
+        "arguments": [
+          "side"
+        ]
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "asciitab.openAudioPanel",
+          "when": "editorLangId == asciitab",
+          "group": "navigation",
+          "arguments": [
+            "side"
+          ]
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",

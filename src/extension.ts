@@ -1,26 +1,60 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { parseAsciiTab } from './parser';
+import { getWebviewContent } from './renderer/webview';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+let panel: vscode.WebviewPanel | undefined;
+let webviewReady = false;
+
 export function activate(context: vscode.ExtensionContext) {
+  console.log("AsciiTab extension activated");
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "asciitab-reader" is now active!');
+  function createOrShowPanel(location: "side" | "current"): vscode.WebviewPanel {
+  const column =
+    location === "side" ? vscode.ViewColumn.Beside : vscode.ViewColumn.Active;
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('asciitab-reader.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from ASCIITab Reader!');
-	});
+  // If user wants a new tab (current tab), always create a new panel
+  if (location === "current") {
+    return vscode.window.createWebviewPanel(
+      'asciitabAudio',
+      'AsciiTab Audio',
+      column,
+      { enableScripts: true, retainContextWhenHidden: true }
+    );
+  }
 
-	context.subscriptions.push(disposable);
+  // For side panel, reuse single panel
+  if (panel) {
+    panel.reveal(column);
+    return panel;
+  }
+
+  panel = vscode.window.createWebviewPanel(
+    'asciitabAudio',
+    'AsciiTab Audio',
+    column,
+    { enableScripts: true, retainContextWhenHidden: true }
+  );
+
+  panel.webview.html = getWebviewContent();
+
+  panel.webview.onDidReceiveMessage(msg => {
+    if (msg.type === 'ready') webviewReady = true;
+  });
+
+  panel.onDidDispose(() => {
+    panel = undefined;
+    webviewReady = false;
+  });
+
+  return panel;
 }
 
-// This method is called when your extension is deactivated
+vscode.commands.registerCommand(
+  'asciitab.openAudioPanel',
+  (location: "side" | "current" = "side") => {
+    createOrShowPanel(location);
+  }
+);
+}
+
 export function deactivate() {}
