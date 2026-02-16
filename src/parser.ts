@@ -67,3 +67,33 @@ function parseFrets(body: string): (number | null)[] {
 
   return result;
 }
+
+
+
+
+
+
+// function parseGuitarTab(tab: string[]): GuitarNote[] {
+//   const notes: GuitarNote[] = [];
+//   const strings = ['E', 'A', 'D', 'G', 'B', 'e']; // Low to high
+//   const openStringFreqs = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63]; // EADGBE
+
+//   tab.forEach((line, stringIndex) => {
+//     const frets = line.match(/\d+/g);
+//     if (frets) {
+//       frets.forEach(fret => {
+//         const fretNum = parseInt(fret, 10);
+//         const frequency = openStringFreqs[stringIndex] * Math.pow(2, fretNum / 12);
+//         notes.push({
+//           string: stringIndex + 1,
+//           fret: fretNum,
+//           frequency,
+//           timing: 0, // Set timing based on position in the tab
+//           duration: 0.5,
+//         });
+//       });
+//     }
+//   });
+
+//   return notes;
+// }

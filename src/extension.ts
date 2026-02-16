@@ -17,6 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
     'asciitab.openAudioPanelToSide',
     () => { createOrShowPanel("side"); }
   ));
+
 }
 
 function createOrShowPanel(location: "side" | "current"): vscode.WebviewPanel {
