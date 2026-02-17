@@ -69,3 +69,42 @@ You can author your README using Visual Studio Code. Here are some useful editor
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
+
+
+
+## Notes
+
+### freq for each chords
+
+// const notes = [ 
+// { freq: 82.41, time: now + 0.0 }, 
+// { freq: 110.00 * Math.pow(2, 2/12), time: now + 0.1 }, 
+// { freq: 146.83 * Math.pow(2, 2/12), time: now + 0.2 }, 
+// { freq: 196.00, time: now + 0.3 }, 
+// { freq: 246.94, time: now + 0.4 }, 
+// { freq: 329.63, time: now + 0.5 }, 
+// ];
+
+### nonce and CSP header
+
+Not sure what it is
+
+```
+const nonce = getNonce();
+
+return `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none';
+               script-src 'nonce-${nonce}';
+               style-src ${webview.cspSource};">
+  </head>
+  <body>
+    <script nonce="${nonce}" src="${scriptUri}"></script>
+  </body>
+  </html>
+`;
+```
