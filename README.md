@@ -85,6 +85,10 @@ You can author your README using Visual Studio Code. Here are some useful editor
 // { freq: 329.63, time: now + 0.5 }, 
 // ];
 
+### Parser
+
+https://chatgpt.com/c/6994cf90-de58-8326-9d0f-b43ba9422bd7
+
 ### nonce and CSP header
 
 Not sure what it is
