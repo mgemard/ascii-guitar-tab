@@ -112,3 +112,14 @@ return `
   </html>
 `;
 ```
+
+
+
+https://en.wikipedia.org/wiki/List_of_musical_symbols
+
+https://www.songsterr.com/howtoreadtab
+
+
+
+
+
