@@ -123,3 +123,5 @@ https://www.songsterr.com/howtoreadtab
 
 
 
+// TODO continue from there (see last message) : https://chatgpt.com/c/69976e66-7d88-8387-85a9-70334aa2caa8
+// FIXME in esbuild.js, it cannot be `entryPoints: ['src/webview/main.ts'],`
