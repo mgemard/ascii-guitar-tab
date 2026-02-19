@@ -1,3 +1,5 @@
+import { parseTab, playTab } from "../player/tabPlayer";
+
 const vscode = acquireVsCodeApi();
 
 let currentAudioContext: AudioContext | null = null;
@@ -101,4 +103,34 @@ window.addEventListener("DOMContentLoaded", () => {
   );
 
   vscode.postMessage({ type: 'ready' });
+});
+
+
+
+
+const playBtn = document.getElementById('playBtn') as HTMLButtonElement;
+const textarea = document.getElementById('tabInput') as HTMLTextAreaElement;
+
+let isPlaying = false;
+
+playBtn.addEventListener('click', async () => {
+  if (isPlaying) {
+    location.reload(); // simple reset strategy
+    return;
+  }
+
+  try {
+    isPlaying = true;
+    playBtn.textContent = 'Playing...';
+
+    const parsed = parseTab(textarea.value);
+    await playTab(parsed);
+
+    playBtn.textContent = 'Play';
+    isPlaying = false;
+  } catch (err) {
+    console.error(err);
+    playBtn.textContent = 'Play';
+    isPlaying = false;
+  }
 });
