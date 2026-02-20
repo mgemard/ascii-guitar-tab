@@ -89,6 +89,9 @@ You can author your README using Visual Studio Code. Here are some useful editor
 
 https://chatgpt.com/c/6994cf90-de58-8326-9d0f-b43ba9422bd7
 
+On how to write a parser so that it is flexible enough to later add all functionnality of music notation
+https://chatgpt.com/c/69987cbe-c990-8328-8821-15a97e91627d
+
 ### nonce and CSP header
 
 Not sure what it is
