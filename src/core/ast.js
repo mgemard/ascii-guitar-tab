@@ -1,0 +1,2 @@
+// core/ast.ts
+export {};

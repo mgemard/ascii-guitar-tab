@@ -3,5 +3,6 @@
   "compilerOptions": {
     "lib": ["ES2022", "DOM"]
   },
-  "include": ["src/webview"]
+  "include": ["src/webview"],
+  "exclude": ["src/test"]
 }
